@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useAnimation } from "framer-motion";
 import Logo from "./Logo";
 
 const LandingPage = () => {
+  const [fade, setFade] = useState(false);
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
 
@@ -24,7 +25,7 @@ const LandingPage = () => {
     requestAnimationFrame(animateCursor);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     animateCursor();
 
     return () => {
@@ -32,7 +33,7 @@ const LandingPage = () => {
     };
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
@@ -49,11 +50,25 @@ const LandingPage = () => {
         className="object-cover object-top w-full h-full absolute z-10"
       />
       <motion.div
-        animate={controls}
+        animate={
+          fade
+            ? {
+                x: cursorX.get() - 75,
+                y: cursorY.get() - 200,
+                scale: 12,
+                transition: { duration: 0.8, ease: "easeIn" },
+              }
+            : controls
+        }
         className="h-64 w-64 absolute mix-blend-difference blur-lg bg-white rounded-full z-20"
       ></motion.div>
       <motion.div
-        animate={controls}
+        animate={
+          fade
+            ? { x: cursorX.get() - 75, y: cursorY.get() - 200, opacity: [1, 0] }
+            : controls
+        }
+        onClick={() => setFade(true)}
         className="text-white cursor-pointer flex justify-center items-center text-3xl font-semibold h-64 w-64 absolute rounded-full z-30"
       >
         Enter
@@ -62,15 +77,19 @@ const LandingPage = () => {
         className="fixed flex gap-36 w-full text-white text-7xl font-extrabold z-10 whitespace-nowrap"
         animate={{
           x: (typeof window !== "undefined" ? -window.innerWidth : 0) + 35,
+          opacity: fade == true ? 0 : 1,
         }}
-        transition={{ ease: "linear", duration: 15, repeat: Infinity }}
+        transition={{ ease: "linear", duration: fade == false ? 15 : 0.5, repeat: fade == false ? Infinity : 0 }}
       >
         {[...Array(30)].map((_, index) => (
           <Logo key={index} />
         ))}
       </motion.div>
-      <div className="fixed bottom-0 left-0 flex justify-start font-medium z-10 text-xs">
-        <div className="max-w-xs p-6 text-red-400">
+      <motion.div className="fixed bottom-0 left-0 flex justify-start font-medium z-10 text-xs"
+      animate={{ opacity: fade == true ? 0 : 1,}}
+      transition={{delay: 0.2}}
+      >
+        <div className="max-w-xs p-6 text-white">
           <h1 className=" mb-4  font-semibold ">
             Welcome to Digital Art Scape
           </h1>
@@ -85,7 +104,7 @@ const LandingPage = () => {
             pixels become poetry and every stroke tells a story.
           </p>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
