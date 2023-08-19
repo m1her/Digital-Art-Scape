@@ -30,7 +30,7 @@ const Loading = () => {
         initial={{ x: -340, scale: 1 }}
         animate={{ x: [-340, 0, 340] }}
         transition={{ duration: 2.5, ease: [0.6, 0.05, -0.01, 0.9] }}
-        style={{ willChange: 'transform' }} // Enable hardware acceleration
+        style={{ willChange: 'transform' }}
       ></motion.div>
           </div>
         </motion.div>

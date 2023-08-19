@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Image from "next/image";
 import {
   motion,
@@ -9,7 +9,11 @@ import {
 } from "framer-motion";
 import Logo from "./Logo";
 
-const LandingPage = ({ change }) => {
+type landingProps = {
+change: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const LandingPage: FC<landingProps> = ({ change }) => {
   const [fade, setFade] = useState(false);
   const [exit, setExit] = useState(false);
   const cursorX = useMotionValue(0);
@@ -34,12 +38,10 @@ const LandingPage = ({ change }) => {
   const stop = () => {
     controls.start("hidden");
     setFade(true);
-
+    change(true);
     setTimeout(() => {
       setExit(true);
-      change(true);
     }, 100);
-    //click(true);
   };
   useEffect(() => {
     animateCursor();
