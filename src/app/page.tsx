@@ -1,7 +1,7 @@
 "use client";
 import LandingPage from "@/features/LandingPage";
 import MainBg from "@/features/MainBg";
-import Loading from "@/features/loading";
+import Loading from "@/features/Loading";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
