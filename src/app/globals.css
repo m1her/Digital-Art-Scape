@@ -1,4 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.shadowWhite {
+  box-shadow: -30px 0px 20px 20px rgba(255, 255, 255);
+}
+.breakWhiteShadow {
+  box-shadow: -30px 0px 20px 20px rgba(255, 255, 255);
+}
